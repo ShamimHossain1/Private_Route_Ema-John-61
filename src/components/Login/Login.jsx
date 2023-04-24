@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../AuthProviders/AuthProviders';
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const { signIn, setUser } = useContext(AuthContext);
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
@@ -14,6 +14,8 @@ const Login = () => {
         signIn(email, password)
             .then(result => {
                 const loggedUser = result.user
+                // setUser(loggedUser);
+            
                 form.reset();
             })
             .catch(error => {

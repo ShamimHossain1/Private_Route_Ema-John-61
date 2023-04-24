@@ -1,28 +1,49 @@
-import React, { createContext, useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import React, { createContext, useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import app from '../../Firebase/Firebase.config';
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app)
-const  AuthProviders = ({children}) => {
+const AuthProviders = ({ children }) => {
     const [user, setUser] = useState(null);
-    const createUser = (email, password) =>{
+
+    const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
-    const signIn = (email, password)=>{
-        return signInWithEmailAndPassword (auth, email, password);
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
     }
-    const authInfo ={
-        user, 
+
+    const logOut = () => {
+        // console.log('hello')
+        return signOut(auth);
+    }
+
+    // observer user auth state
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+        });
+
+        // stop observing while unmounting
+        return () => {
+            return unsubscribe();
+        }
+    }, [])
+
+    const authInfo = {
+        user,
         setUser,
         createUser,
-        signIn
+        signIn,
+        logOut
     }
     return (
 
         <div>
             <AuthContext.Provider value={authInfo}>
-        {children}
+                {children}
             </AuthContext.Provider>
         </div>
     );
