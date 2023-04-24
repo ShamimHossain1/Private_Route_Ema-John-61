@@ -7,7 +7,7 @@ import { Button } from 'flowbite-react';
 const Header = () => {
     const { user, logOut } = useContext(AuthContext);
 
-   const handleLogout = () => {
+    const handleLogout = () => {
         logOut()
             .then(() => { })
             .catch(error => console.error(error));
@@ -18,13 +18,13 @@ const Header = () => {
             <img src={logo} alt="" />
 
             <div className='text-white text-xl flex gap-10'>
-                {user && <Link to="/">Shop</Link>}
-                {user && <Link to="/orders">Orders</Link>}
-                {user && <Link to="/inventory">Inventory</Link>}
-                <Link to="/login">Login</Link>
-                <Link to="/signUp">Sign up</Link>
+                <Link to="/">Shop</Link>
+                <Link to="/orders">Orders</Link>
+                <Link to="/inventory">Inventory</Link>
+                {user ? null : <Link to="/login">Login</Link>}
+                {user ? null : <Link to="/signUp">Sign up</Link>}
                 {
-                    user && <span>Welcome {user.email} <Button onClick={handleLogout}>Sign Out</Button></span>
+                    user && <span className='text-sm flex items-center gap-4'>Welcome {user.email} <Link to='/login'><Button onClick={handleLogout}>Sign Out</Button></Link></span>
                 }
 
             </div>

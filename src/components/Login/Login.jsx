@@ -1,11 +1,14 @@
-import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Button, Card, Checkbox, Label, Spinner, TextInput } from 'flowbite-react';
+import React, { useContext, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProviders/AuthProviders';
 
 const Login = () => {
-    const { signIn, setUser } = useContext(AuthContext);
+    const { signIn} = useContext(AuthContext);
+    const [user, setUser] =useState('')
+    const navigate = useNavigate();
     const handleLogin = event => {
+        
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
@@ -15,8 +18,10 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user
                 // setUser(loggedUser);
+              
             
                 form.reset();
+                navigate('/')
             })
             .catch(error => {
                 console.log(error.message)
@@ -69,6 +74,9 @@ const Login = () => {
                     </Button>
                 </form>
                 <p className='text-center'>New to Ema Jhon? <Link className='text-blue-600' to='/signUp'>Register Now!</Link></p>
+                {/* {
+                    user && <Navigate to='/'/>
+                } */}
             </Card>
         </div>
 

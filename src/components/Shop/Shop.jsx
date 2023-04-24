@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { addToDb, deleteShoppingCart, getShoppingCart } from '../../utilities/fakedb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../AuthProviders/AuthProviders';
 const Shop = () => {
+
+
     //for fetch data
     const [products, setProduct] = useState([]);
     // console.log(products.length)

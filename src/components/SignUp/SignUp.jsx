@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Card, Checkbox, Label, TextInput, Toast} from 'flowbite-react';
+import { Button, Card, Checkbox, Label, Spinner, TextInput, Toast} from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +9,9 @@ import { AuthContext } from '../AuthProviders/AuthProviders';
 const SignUp = () => {
     const [error, setError]=useState('')
     const {createUser} = useContext(AuthContext);
+    
     const handleSignUp=event=>{
+     
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;

@@ -14,4 +14,17 @@
  * 3.set the children props
  * 4. set context value
  * 5. set the provider
+ * 6. need to use useEffect hook to set observer so that website can check if there any user is already logged in or not
+ * syntax{
+ *   useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+        });
+
+        // stop observing while unmounting
+        return () => {
+            return unsubscribe();
+        }
+    }, [])
+ * }
  */
