@@ -1,12 +1,15 @@
 import { Button, Card, Checkbox, Label, Spinner, TextInput } from 'flowbite-react';
 import React, { useContext, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProviders/AuthProviders';
 
 const Login = () => {
     const { signIn} = useContext(AuthContext);
     const [user, setUser] =useState('')
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const handleLogin = event => {
         
         event.preventDefault();
@@ -17,11 +20,9 @@ const Login = () => {
         signIn(email, password)
             .then(result => {
                 const loggedUser = result.user
-                // setUser(loggedUser);
-              
-            
+                // setUser(loggedUser);                          
                 form.reset();
-                navigate('/')
+                navigate(from, {replace:true});
             })
             .catch(error => {
                 console.log(error.message)
